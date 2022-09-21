@@ -8,6 +8,6 @@ Konzultáció  után elkészítettem 3 specifikációt hogy a következő konzul
 
 ## 2 hét
 A konzultáción sikeresen kiválasztottunk a WebShop ötletét a 3 specifikáció közül.Ezután elkészítettem a feladatkiírást is.
-Ezen a héten még elkészítettem a képernyőképeket is.
+Ezen a héten még elkészítettem a képernyőképeket és az adatmodelt is.
 
 
