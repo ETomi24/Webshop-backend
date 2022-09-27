@@ -11,6 +11,8 @@
 
     <modules>
         <module>user</module>
+        <module>order</module>
+        <module>product</module>
     </modules>
 
     <dependencyManagement>
