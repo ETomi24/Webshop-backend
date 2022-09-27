@@ -1,7 +1,6 @@
 package org.ewebshop;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,11 +15,11 @@ public class OrderService {
     public void orderCreate(String userId) throws Exception {
         //check if user existing
         Boolean exist = restTemplate.getForObject(
-                "http://localhost:8080/api/users/unique/{userId}",
+                "http://USER/api/users/unique/{userId}",
                 Boolean.class,
                 userId
         );
-        if (exist) {
+        if (Boolean.TRUE.equals(exist)) {
             orderRepository.save(Order.builder()
                     .userId(userId)
                     .creationDate(LocalDateTime.now())
