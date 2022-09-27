@@ -13,6 +13,7 @@
         <module>user</module>
         <module>order</module>
         <module>product</module>
+        <module>cart</module>
     </modules>
 
     <dependencyManagement>

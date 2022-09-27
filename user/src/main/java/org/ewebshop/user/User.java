@@ -16,14 +16,9 @@ import javax.persistence.Table;
 public class User {
     @Id
     private String username;
-
     private String email;
-
     private String password;
-
     private String address;
-
     private String phoneNumber;
-
     private Role role;
 }

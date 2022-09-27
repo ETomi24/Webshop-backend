@@ -3,10 +3,9 @@ package org.ewebshop.user;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Objects;
 
 @Slf4j
 @RestController
@@ -20,7 +19,17 @@ public class UserController {
     @PostMapping("/register")
     public void registerUser(@RequestBody UserRegistrationRequest userRegistrationRequest) {
         log.info("new user registration {}", userRegistrationRequest);
-
         userService.registerUser(userRegistrationRequest);
+    }
+
+    @GetMapping("/{username}")
+    public void getByUsername(@PathVariable String username) {
+        userService.getByUsername(username);
+    }
+
+    @GetMapping("/unique/{username}")
+    public boolean uniqueCheck(@PathVariable String username) {
+        User user = userService.getByUsername(username);
+        return Objects.nonNull(user);
     }
 }

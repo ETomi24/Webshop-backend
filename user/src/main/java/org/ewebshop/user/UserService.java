@@ -20,4 +20,8 @@ public class UserService {
         userRepository.saveAndFlush(user);
     }
 
+    public User getByUsername(String username) {
+        return userRepository.getById(username);
+    }
+
 }
