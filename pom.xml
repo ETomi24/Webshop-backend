@@ -16,6 +16,7 @@
         <module>cart</module>
         <module>eureka-server</module>
         <module>clients</module>
+        <module>api-gateway</module>
     </modules>
 
     <dependencyManagement>
