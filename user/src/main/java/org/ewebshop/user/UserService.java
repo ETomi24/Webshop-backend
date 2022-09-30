@@ -3,6 +3,9 @@ package org.ewebshop.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -21,7 +24,13 @@ public class UserService {
     }
 
     public User getByUsername(String username) {
-        return userRepository.getById(username);
+        Optional<User> user = userRepository.findById(username);
+        if (user.isPresent()){
+            return user.get();
+        } else {
+            throw new EntityNotFoundException("Nincs ilyen user");
+        }
+
     }
 
 }

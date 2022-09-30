@@ -3,9 +3,12 @@ package org.ewebshop.user;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Objects;
+
 
 @Slf4j
 @RestController
@@ -29,7 +32,11 @@ public class UserController {
 
     @GetMapping("/unique/{username}")
     public boolean uniqueCheck(@PathVariable String username) {
-        User user = userService.getByUsername(username);
-        return Objects.nonNull(user);
+        try {
+            User user = userService.getByUsername(username);
+            return Objects.nonNull(user);
+        } catch (EntityNotFoundException exception) {
+            return false;
+        }
     }
 }
