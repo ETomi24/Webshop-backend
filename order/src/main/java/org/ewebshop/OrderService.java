@@ -1,6 +1,7 @@
 package org.ewebshop;
 
 import lombok.AllArgsConstructor;
+import org.ewebshop.clients.user.UserClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -10,15 +11,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
-    private final RestTemplate restTemplate;
+    private final UserClient userClient;
 
     public void orderCreate(String userId) throws Exception {
         //check if user existing
-        Boolean exist = restTemplate.getForObject(
-                "http://USER/api/users/unique/{userId}",
-                Boolean.class,
-                userId
-        );
+        Boolean exist = userClient.uniqueCheck(userId);
         if (Boolean.TRUE.equals(exist)) {
             orderRepository.save(Order.builder()
                     .userId(userId)
