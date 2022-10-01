@@ -2,19 +2,19 @@ package org.ewebshop;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "order")
 public class Order {
-
     @Id
     @SequenceGenerator(
             name = "order_id_sequence",
