@@ -5,3 +5,4 @@ Projektet létrehozni tudni milyen irányba induljak
 Adatréteg elkészítése minden servicehez
 
 ## 6.Hét
+Service Controller réteg elkészítése
