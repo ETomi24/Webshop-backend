@@ -3,7 +3,44 @@ package org.ewebshop.category;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.Optional;
+
 @AllArgsConstructor
 @Service
 public class CategoryService {
+
+    private final CategoryRepository categoryRepository;
+
+    public void createCategory(String name) throws EntityExistsException{
+        if(categoryRepository.existsById(name)) {
+            Category category = new Category(name);
+            categoryRepository.save(category);
+        } else {
+            throw new EntityExistsException("Ilyen kategória már létezik");
+        }
+    }
+
+    public void removeCategory(String name) throws EntityNotFoundException{
+        if(categoryRepository.existsById(name)){
+            categoryRepository.deleteById(name);
+        } else {
+            throw new EntityNotFoundException("Ilyen kategória nem létezik");
+        }
+    }
+
+    public Category getCategory(String name) throws EntityNotFoundException {
+        Optional<Category> category = categoryRepository.findById(name);
+        if(category.isPresent()){
+            return category.get();
+        } else {
+            throw new EntityNotFoundException("Ilyen kategória nem létezik");
+        }
+    }
+
+    public List<Category> getAll() {
+        return categoryRepository.findAll();
+    }
 }
