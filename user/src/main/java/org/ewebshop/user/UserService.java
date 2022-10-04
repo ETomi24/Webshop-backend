@@ -1,18 +1,21 @@
 package org.ewebshop.user;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.security.auth.login.LoginException;
 import java.util.Optional;
 
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    public void registerUser(UserRegistrationRequest userRegistrationRequest) {
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    public void register(UserRegistrationRequest userRegistrationRequest) {
         User user = User.builder()
                 .email(userRegistrationRequest.email())
                 .username(userRegistrationRequest.username())
@@ -20,10 +23,20 @@ public class UserService {
                 .password(userRegistrationRequest.password())
                 .role(userRegistrationRequest.role())
                 .build();
-        userRepository.saveAndFlush(user);
+        userRepository.save(user);
     }
 
-    public User getByUsername(String username) {
+    public String login(UserLoginRequest userLoginRequest) throws EntityNotFoundException, LoginException {
+        User user = getByUsername(userLoginRequest.username());
+        if (user.getPassword().equals(userLoginRequest.password())) {
+            return "token";
+        } else {
+            throw new LoginException("Hibás jelszó");
+        }
+    }
+
+
+    public User getByUsername(String username) throws EntityNotFoundException{
         Optional<User> user = userRepository.findById(username);
         if (user.isPresent()){
             return user.get();
