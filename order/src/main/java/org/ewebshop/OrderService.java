@@ -3,8 +3,6 @@ package org.ewebshop;
 import lombok.AllArgsConstructor;
 import org.ewebshop.clients.user.UserClient;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
 import java.time.LocalDateTime;
 
 @Service

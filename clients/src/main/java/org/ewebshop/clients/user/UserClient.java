@@ -8,5 +8,4 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface UserClient {
     @GetMapping(path = "api/users/unique/{username}")
     boolean uniqueCheck(@PathVariable("username") String username);
-
 }
