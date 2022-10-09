@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.EntityExistsException;
+
 @Slf4j
 @RestController
 @AllArgsConstructor
@@ -21,7 +23,7 @@ public class OrderController {
         try{
             orderService.orderCreate(username);
             return new ResponseEntity<>("Order created", HttpStatus.OK);
-        } catch (Exception exception) {
+        } catch (EntityExistsException exception) {
             return new ResponseEntity<>(exception.getMessage() , HttpStatus.NOT_FOUND);
         }
 

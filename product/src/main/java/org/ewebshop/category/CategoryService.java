@@ -19,7 +19,7 @@ public class CategoryService {
             Category category = new Category(name);
             categoryRepository.save(category);
         } else {
-            throw new EntityExistsException("Ilyen kategória már létezik");
+            throw new EntityExistsException("This Category is already exists");
         }
     }
 
@@ -27,7 +27,7 @@ public class CategoryService {
         if(categoryRepository.existsById(name)){
             categoryRepository.deleteById(name);
         } else {
-            throw new EntityNotFoundException("Ilyen kategória nem létezik");
+            throw new EntityNotFoundException("This Category is not existing");
         }
     }
 
@@ -36,7 +36,7 @@ public class CategoryService {
         if(category.isPresent()){
             return category.get();
         } else {
-            throw new EntityNotFoundException("Ilyen kategória nem létezik");
+            throw new EntityNotFoundException("This Category is not existing");
         }
     }
 

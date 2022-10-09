@@ -30,7 +30,7 @@ public class ProductService {
                     .build();
             productRepository.save(product);
         } catch (EntityNotFoundException exception) {
-            throw new EntityNotFoundException("A megadott kategória nem létezik");
+            throw new EntityNotFoundException("Category not existing");
         }
     }
 
@@ -38,7 +38,7 @@ public class ProductService {
         if(productRepository.existsById(id)){
             productRepository.deleteById(id);
         } else {
-            throw new EntityNotFoundException("Ilyen termék nem létezik");
+            throw new EntityNotFoundException("This product is not existing");
         }
     }
 
@@ -47,7 +47,7 @@ public class ProductService {
         if(product.isPresent()){
             return product.get();
         } else {
-            throw new EntityNotFoundException("Ilyen termék nem létezik");
+            throw new EntityNotFoundException("This product is not existing");
         }
     }
 

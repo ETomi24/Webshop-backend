@@ -3,6 +3,8 @@ package org.ewebshop;
 import lombok.AllArgsConstructor;
 import org.ewebshop.clients.user.UserClient;
 import org.springframework.stereotype.Service;
+
+import javax.persistence.EntityExistsException;
 import java.time.LocalDateTime;
 
 @Service
@@ -11,9 +13,9 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final UserClient userClient;
 
-    public void orderCreate(String userId) throws Exception {
+    public void orderCreate(String userId) throws EntityExistsException {
         //check if user existing
-        Boolean exist = userClient.uniqueCheck(userId);
+        Boolean exist = userClient.existsCheck(userId);
         if (Boolean.TRUE.equals(exist)) {
             orderRepository.save(Order.builder()
                     .userId(userId)
@@ -22,7 +24,7 @@ public class OrderService {
                     .build()
             );
         } else {
-            throw new Exception("User is not existing");
+            throw new EntityExistsException("User is not existing");
         }
 
     }
