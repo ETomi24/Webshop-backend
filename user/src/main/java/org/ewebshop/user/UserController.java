@@ -28,7 +28,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody UserLoginRequest userLoginRequest) {
-        log.info("new user registration {}", userLoginRequest);
+        log.info("new login {}", userLoginRequest);
         try {
             return new ResponseEntity<>(userService.login(userLoginRequest), HttpStatus.OK);
         } catch (EntityNotFoundException exception) {
@@ -44,12 +44,11 @@ public class UserController {
         userService.getByUsername(username);
     }
 
-    @GetMapping("/unique/{username}")
+    @GetMapping("/exists/{username}")
     public boolean uniqueCheck(@PathVariable String username) {
         try {
-            User user = userService.getByUsername(username);
-            return Objects.nonNull(user);
-        } catch (EntityNotFoundException exception) {
+            return userService.userExists(username);
+        } catch (Exception exception) {
             return false;
         }
     }

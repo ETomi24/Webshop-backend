@@ -2,6 +2,7 @@ package org.ewebshop.user;
 
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import javax.security.auth.login.LoginException;
 import java.util.Optional;
@@ -15,15 +16,19 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public void register(UserRegistrationRequest userRegistrationRequest) {
-        User user = User.builder()
-                .email(userRegistrationRequest.email())
-                .username(userRegistrationRequest.username())
-                .phoneNumber(userRegistrationRequest.phoneNumber())
-                .password(userRegistrationRequest.password())
-                .role(userRegistrationRequest.role())
-                .build();
-        userRepository.save(user);
+    public void register(UserRegistrationRequest userRegistrationRequest) throws EntityExistsException{
+        if (userExists(userRegistrationRequest.username())){
+            throw new EntityExistsException("User exits");
+        } else {
+            User user = User.builder()
+                    .email(userRegistrationRequest.email())
+                    .username(userRegistrationRequest.username())
+                    .phoneNumber(userRegistrationRequest.phoneNumber())
+                    .password(userRegistrationRequest.password())
+                    .role(userRegistrationRequest.role())
+                    .build();
+            userRepository.save(user);
+        }
     }
 
     public String login(UserLoginRequest userLoginRequest) throws EntityNotFoundException, LoginException {
@@ -31,7 +36,7 @@ public class UserService {
         if (user.getPassword().equals(userLoginRequest.password())) {
             return "token";
         } else {
-            throw new LoginException("Hibás jelszó");
+            throw new LoginException("Bad password");
         }
     }
 
@@ -41,9 +46,12 @@ public class UserService {
         if (user.isPresent()){
             return user.get();
         } else {
-            throw new EntityNotFoundException("Nincs ilyen user");
+            throw new EntityNotFoundException("User not found");
         }
+    }
 
+    public boolean userExists(String username){
+        return userRepository.existsById(username);
     }
 
 }

@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient ("user")
 public interface UserClient {
-    @GetMapping(path = "api/users/unique/{username}")
-    boolean uniqueCheck(@PathVariable("username") String username);
+    @GetMapping(path = "api/users/exists/{username}")
+    boolean existsCheck(@PathVariable("username") String username);
 }
