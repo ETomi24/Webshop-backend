@@ -19,9 +19,12 @@ Sikerült elkészítenem a serviceket és eldöntöttem hogy elöször eureka-t 
 ## 4.hét
 Ezen a héten elkészítettem az adatréteget minden servichez.Ennek során felmerült bennem egy olyan gondolat,
 hogy a cartban ami az ábrán a contains kapcsolat a product és az order között, hogy ezt a userrel kéne összekötni és az orderId-t
-csak akkor megadni amikor tényleg rendelés történik.Ezen a problémám még gondolkozok mi lenne a jobb az aktuális vagy az hogy a userrel is összekötöm.
+csak akkor megadni amikor tényleg rendelés történik.Ezen a problémán még gondolkozok, hogy mi lenne a jobb, az aktuális, vagy az, hogy a userrel is összekötöm.
 A servicekben elkezdtem írni a logikát ez egy két helyen már elég jól áll.
-Az alkalmazásban elkezdtem használni az OpeinFeign klienseket ami a restTempletet helyettesiti és ezzel tudom csökkenti az alkalmazás komplixtását.
-Elkészítettem ezen felül az apiGatewayt is, ahonnan egy helyről elérem az összes servicet. Ezt fogom ugye majd használni az Angular kliensnel is.
+Az alkalmazásban elkezdtem használni az OpeinFeign klienseket ami a restTempletet helyettesiti és ezzel tudom csökkenti az alkalmazás komplexitását.
+Elkészítettem ezen felül az apiGatewayt is, ahonnan egy helyről elérem az összes service-t. Ezen keresztül fogom majd elérni a szervert az Angular kliensnből.
+
+## 5.hét
+Az 5.héten az alkalmazás biztonságossá tételén ügyködtem.Ezt jwt token használatával probálom elérni.
 
 
