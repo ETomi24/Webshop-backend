@@ -2,14 +2,13 @@ package org.ewebshop.user;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.ewebshop.clients.user.UserDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import javax.security.auth.login.LoginException;
-import java.util.Objects;
 
 
 @Slf4j
@@ -26,7 +25,7 @@ public class UserController {
         userService.register(userRegistrationRequest);
     }
 
-    @PostMapping("/login")
+    @GetMapping("/login")
     public ResponseEntity<String> login(@RequestBody UserLoginRequest userLoginRequest) {
         log.info("new login {}", userLoginRequest);
         try {
@@ -40,8 +39,13 @@ public class UserController {
 
 
     @GetMapping("/{username}")
-    public void getByUsername(@PathVariable String username) {
-        userService.getByUsername(username);
+    public ResponseEntity<Object> getByUsername(@PathVariable String username) {
+        try {
+            User user = userService.getByUsername(username);
+            return new ResponseEntity<>(new UserDto(user.getUsername(),user.getEmail(),user.getPassword(),user.getAddress(),user.getPhoneNumber(),user.getRole().name()), HttpStatus.OK);
+        } catch (EntityNotFoundException exception) {
+            return new ResponseEntity<>(exception.getMessage(),HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/exists/{username}")
