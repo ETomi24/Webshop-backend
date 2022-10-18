@@ -17,6 +17,7 @@
         <module>eureka-server</module>
         <module>clients</module>
         <module>api-gateway</module>
+        <module>auth-server</module>
     </modules>
 
     <dependencyManagement>

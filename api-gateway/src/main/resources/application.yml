@@ -1,5 +1,5 @@
 server:
-  port: 8084
+  port: 8085
 
 spring:
   application:
@@ -17,7 +17,18 @@ spring:
           uri: lb://ORDER
           predicates:
             - Path=/api/orders/**
-
+        - id: cart
+          uri: lb://CART
+          predicates:
+            - Path=/api/carts/**
+        - id: product
+          uri: lb://PRODUCT
+          predicates:
+            - Path=/api/products/**,/api/categories/**
+        - id: auth
+          uri: lb://AUTH
+          predicates:
+            - Path=/api/auth/**
 eureka:
   client:
     service-url:
