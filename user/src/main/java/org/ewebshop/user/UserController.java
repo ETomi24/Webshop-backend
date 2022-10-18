@@ -6,7 +6,9 @@ import org.ewebshop.clients.user.UserDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import javax.security.auth.login.LoginException;
 
@@ -21,8 +23,12 @@ public class UserController {
 
     @PostMapping("/register")
     public void registerUser(@RequestBody UserRegistrationRequest userRegistrationRequest) {
-        log.info("new user registration {}", userRegistrationRequest);
-        userService.register(userRegistrationRequest);
+        try{
+            log.info("new user registration {}", userRegistrationRequest);
+            userService.register(userRegistrationRequest);
+        } catch (EntityExistsException exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage(), exception);
+        }
     }
 
     @GetMapping("/login")
@@ -39,12 +45,12 @@ public class UserController {
 
 
     @GetMapping("/{username}")
-    public ResponseEntity<Object> getByUsername(@PathVariable String username) {
+    public UserDto getByUsername(@PathVariable String username) {
         try {
             User user = userService.getByUsername(username);
-            return new ResponseEntity<>(new UserDto(user.getUsername(),user.getEmail(),user.getPassword(),user.getAddress(),user.getPhoneNumber(),user.getRole().name()), HttpStatus.OK);
+            return new UserDto(user.getUsername(),user.getEmail(),user.getPassword(),user.getAddress(),user.getPhoneNumber(),user.getRole().name());
         } catch (EntityNotFoundException exception) {
-            return new ResponseEntity<>(exception.getMessage(),HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage(), exception);
         }
     }
 

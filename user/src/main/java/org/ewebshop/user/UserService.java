@@ -1,5 +1,6 @@
 package org.ewebshop.user;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
@@ -11,9 +12,11 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public void register(UserRegistrationRequest userRegistrationRequest) throws EntityExistsException{
@@ -24,7 +27,7 @@ public class UserService {
                     .email(userRegistrationRequest.email())
                     .username(userRegistrationRequest.username())
                     .phoneNumber(userRegistrationRequest.phoneNumber())
-                    .password(userRegistrationRequest.password())
+                    .password(passwordEncoder.encode(userRegistrationRequest.password()))
                     .role(userRegistrationRequest.role())
                     .build();
             userRepository.save(user);
