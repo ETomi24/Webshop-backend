@@ -1,8 +1,8 @@
 package org.ewebshop.product;
 
 import lombok.AllArgsConstructor;
-import org.ewebshop.category.Category;
 import org.ewebshop.category.CategoryService;
+import org.ewebshop.product.exception.IdNotMatchingException;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
@@ -18,23 +18,19 @@ public class ProductService {
     private final CategoryService categoryService;
 
     public void createProduct(ProductCreateRequest productCreateRequest) throws EntityExistsException {
-        try {
-            categoryService.getCategory(productCreateRequest.categoryId());
-            Product product = Product.builder()
-                    .description(productCreateRequest.description())
-                    .price(productCreateRequest.price())
-                    .quantity(productCreateRequest.quantity())
-                    .name(productCreateRequest.name())
-                    .categoryId(productCreateRequest.categoryId())
-                    .pictureUrl(productCreateRequest.pictureUrl())
-                    .build();
-            productRepository.save(product);
-        } catch (EntityNotFoundException exception) {
-            throw new EntityNotFoundException("Category not existing");
-        }
+        categoryService.getCategory(productCreateRequest.categoryId());
+        Product product = Product.builder()
+                .description(productCreateRequest.description())
+                .price(productCreateRequest.price())
+                .quantity(productCreateRequest.quantity())
+                .name(productCreateRequest.name())
+                .categoryId(productCreateRequest.categoryId())
+                .pictureUrl(productCreateRequest.pictureUrl())
+                .build();
+        productRepository.save(product);
     }
 
-    public void removeProduct(int id) throws EntityNotFoundException{
+    public void deleteProduct(int id) throws EntityNotFoundException{
         if(productRepository.existsById(id)){
             productRepository.deleteById(id);
         } else {
@@ -55,5 +51,22 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public void increaseQuantity(int id, int amount) throws EntityNotFoundException{
+        Product product = getProduct(id);
+        product.setQuantity(product.getQuantity() + amount);
+        productRepository.save(product);
+    }
 
+    public void decreaseQuantity(int id, int amount) {
+        Product product = getProduct(id);
+        product.setQuantity(product.getQuantity() - amount);
+        productRepository.save(product);
+    }
+
+    public void updateProduct(int id, Product product) throws IdNotMatchingException,EntityNotFoundException {
+        if (id != product.getId()){throw new IdNotMatchingException();}
+        //Megkeresem hogy létezik-e az adott termék,ha nem, dob hibát
+        this.getProduct(id);
+        productRepository.save(product);
+    }
 }
