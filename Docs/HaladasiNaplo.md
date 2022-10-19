@@ -27,4 +27,10 @@ Elkészítettem ezen felül az apiGatewayt is, ahonnan egy helyről elérem az �
 ## 5.hét
 Az 5.héten az alkalmazás biztonságossá tételén ügyködtem.Ezt jwt token használatával probálom elérni.
 
+## 6.hét
+Az aktuális héten a befejeztem nagyjából a servicek kontrollerek vázának irását innen már csak finom hangolni kell rajtuk.
+Csináltam egy auth servert aminek feladata JWT token ellöállítása és validálása.
+Frontenden verziót frissitettem mert még egy régebbi verzióval generáltam ennek során felmerültek problémák,
+de végül sikerült megoldani.
+
 
