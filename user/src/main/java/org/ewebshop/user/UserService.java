@@ -36,7 +36,7 @@ public class UserService {
 
     public String login(UserLoginRequest userLoginRequest) throws EntityNotFoundException, LoginException {
         User user = getByUsername(userLoginRequest.username());
-        if (user.getPassword().equals(userLoginRequest.password())) {
+        if (passwordEncoder.matches(userLoginRequest.password(),user.getPassword())) {
             return "token";
         } else {
             throw new LoginException("Bad password");
