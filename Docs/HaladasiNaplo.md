@@ -32,5 +32,6 @@ Az aktuális héten a befejeztem nagyjából a servicek kontrollerek vázának i
 Csináltam egy auth servert aminek feladata JWT token ellöállítása és validálása.
 Frontenden verziót frissitettem mert még egy régebbi verzióval generáltam ennek során felmerültek problémák,
 de végül sikerült megoldani.
+A frontenden mégcsak a navbaron dolgozok de már itt felmerült egy probléma hogy a navbar nem műkődik rendesen
 
 
