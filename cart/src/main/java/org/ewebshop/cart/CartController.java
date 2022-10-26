@@ -21,7 +21,7 @@ public class CartController {
         try {
             return cartService.getAll(orderId);
         } catch (Exception exception) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage(), exception);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
         }
     }
 
@@ -30,7 +30,7 @@ public class CartController {
         try{
             cartService.addCartItem(productId,orderId,amount);
         } catch (Exception exception) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage(), exception);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
         }
     }
 
@@ -39,7 +39,16 @@ public class CartController {
         try{
             cartService.removeCartItem(productId, orderId, amount);
         } catch (Exception exception) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage(), exception);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
+        }
+    }
+
+    @GetMapping("/exists/{orderId}/{productId}")
+    public boolean uniqueCheck(@PathVariable int orderId, @PathVariable int productId) {
+        try {
+            return cartService.existsCheck(productId,orderId);
+        } catch (Exception exception) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
         }
     }
 
