@@ -23,7 +23,7 @@ public class CategoryService {
         }
     }
 
-    public void removeCategory(String name) throws EntityNotFoundException{
+    public void deleteCategory(String name) throws EntityNotFoundException{
         if(categoryRepository.existsById(name)){
             categoryRepository.deleteById(name);
         } else {

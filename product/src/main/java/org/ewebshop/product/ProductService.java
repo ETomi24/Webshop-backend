@@ -69,4 +69,9 @@ public class ProductService {
         this.getProduct(id);
         productRepository.save(product);
     }
+
+    public boolean productExists(int id){
+        return productRepository.existsById(id);
+    }
+
 }

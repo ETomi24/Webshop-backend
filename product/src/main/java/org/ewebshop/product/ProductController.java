@@ -62,7 +62,7 @@ public class ProductController {
         try {
             productService.updateProduct(id,product);
         } catch (IdNotMatchingException exception) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage(), exception);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
         }
     }
 
@@ -71,7 +71,7 @@ public class ProductController {
         try {
             productService.increaseQuantity(id,amount);
         } catch (EntityNotFoundException exception) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage(), exception);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
         }
     }
 
@@ -80,7 +80,16 @@ public class ProductController {
         try {
             productService.decreaseQuantity(id,amount);
         } catch (EntityNotFoundException exception) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage(), exception);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
+        }
+    }
+
+    @GetMapping("/exists/{id}")
+    public boolean uniqueCheck(@PathVariable Integer id) {
+        try {
+            return productService.productExists(id);
+        } catch (Exception exception) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
         }
     }
 
