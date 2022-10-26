@@ -19,6 +19,7 @@ public class ProductService {
 
     public void createProduct(ProductCreateRequest productCreateRequest) throws EntityExistsException {
         categoryService.getCategory(productCreateRequest.categoryId());
+        //TODO CHECK if product already existing one
         Product product = Product.builder()
                 .description(productCreateRequest.description())
                 .price(productCreateRequest.price())

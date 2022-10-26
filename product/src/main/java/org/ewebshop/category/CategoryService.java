@@ -15,7 +15,7 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     public void createCategory(String name) throws EntityExistsException{
-        if(categoryRepository.existsById(name)) {
+        if(!categoryRepository.existsById(name)) {
             Category category = new Category(name);
             categoryRepository.save(category);
         } else {
