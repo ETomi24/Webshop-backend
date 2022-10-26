@@ -34,4 +34,8 @@ Frontenden verziót frissitettem mert még egy régebbi verzióval generáltam e
 de végül sikerült megoldani.
 A frontenden mégcsak a navbaron dolgozok de már itt felmerült egy probléma hogy egy dropdown elem nem műkődik rendesen
 
+## 7.hét
+A héten a backenden kellet foltozgatni egy két hibát és kimaradó funkciót elkészíteni.Frontenden elkesztem készíteni az appot.
+A bejelentkezés regisztráció váza késze van.Admin felületet kesztem el készíteni még a héten.
+
 
