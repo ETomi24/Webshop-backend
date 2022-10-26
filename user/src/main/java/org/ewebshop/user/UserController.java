@@ -27,7 +27,7 @@ public class UserController {
             log.info("new user registration {}", userRegistrationRequest);
             userService.register(userRegistrationRequest);
         } catch (EntityExistsException exception) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage(), exception);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
         }
     }
 
@@ -50,7 +50,7 @@ public class UserController {
             User user = userService.getByUsername(username);
             return new UserDto(user.getUsername(),user.getEmail(),user.getPassword(),user.getAddress(),user.getPhoneNumber(),user.getRole().name());
         } catch (EntityNotFoundException exception) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage(), exception);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
         }
     }
 
@@ -59,7 +59,7 @@ public class UserController {
         try {
             return userService.userExists(username);
         } catch (Exception exception) {
-            return false;
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
         }
     }
 }
