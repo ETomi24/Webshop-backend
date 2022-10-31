@@ -46,9 +46,10 @@ public class CategoryController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createCategory(@RequestBody String name) {
+    public ResponseEntity<String> createCategory(@RequestBody CategoryCreateRequest categoryCreateRequest) {
         try {
-            categoryService.createCategory(name);
+            log.info(categoryCreateRequest.toString());
+            categoryService.createCategory(categoryCreateRequest);
             return new ResponseEntity<>("Category created", HttpStatus.CREATED);
         } catch (EntityExistsException exception) {
             return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
