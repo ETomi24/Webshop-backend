@@ -25,8 +25,8 @@ public class CartController {
         }
     }
 
-    @PostMapping("/add/{orderId}/{productId}/{amount}")
-    public void addItem(@PathVariable int orderId, @PathVariable int productId, @PathVariable int amount) {
+    @PostMapping("/add/{orderId}/{productId}")
+    public void addItem(@PathVariable int orderId, @PathVariable int productId, @RequestBody int amount) {
         try{
             cartService.addCartItem(productId,orderId,amount);
         } catch (Exception exception) {
@@ -34,8 +34,8 @@ public class CartController {
         }
     }
 
-    @PostMapping("/remove/{orderId}/{productId}/{amount}")
-    public void removeItem(@PathVariable int orderId, @PathVariable int productId, @PathVariable int amount) {
+    @PostMapping("/remove/{orderId}/{productId}")
+    public void removeItem(@PathVariable int orderId, @PathVariable int productId, @RequestBody int amount) {
         try{
             cartService.removeCartItem(productId, orderId, amount);
         } catch (Exception exception) {
