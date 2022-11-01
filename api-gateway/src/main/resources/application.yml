@@ -8,6 +8,16 @@ spring:
     base-url: http://localhost:9411
   cloud:
     gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:4200"
+            allowedHeaders: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - DELETE
+              - PUT
       routes:
         - id: user
           uri: lb://USER
