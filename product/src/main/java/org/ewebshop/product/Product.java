@@ -26,6 +26,7 @@ public class Product {
     private String name;
     private String categoryId;
 
-    private String pictureUrl;
+    @Lob
+    byte[] picture;
 
 }

@@ -1,11 +1,11 @@
 package org.ewebshop.product;
 
 import lombok.AllArgsConstructor;
+import org.apache.commons.codec.binary.Base64;
 import org.ewebshop.category.CategoryService;
 import org.ewebshop.product.exception.IdNotMatchingException;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +17,7 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final CategoryService categoryService;
 
-    public void createProduct(ProductCreateRequest productCreateRequest) throws EntityExistsException {
+    public void createProduct(ProductCreateRequest productCreateRequest) throws EntityNotFoundException {
         categoryService.getCategory(productCreateRequest.categoryId());
         //TODO CHECK if product already existing one
         Product product = Product.builder()
@@ -26,7 +26,7 @@ public class ProductService {
                 .quantity(productCreateRequest.quantity())
                 .name(productCreateRequest.name())
                 .categoryId(productCreateRequest.categoryId())
-                .pictureUrl(productCreateRequest.pictureUrl())
+                .picture(Base64.decodeBase64(productCreateRequest.picture().split(",")[1]))
                 .build();
         productRepository.save(product);
     }
@@ -64,10 +64,19 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    public void updateProduct(int id, Product product) throws IdNotMatchingException,EntityNotFoundException {
-        if (id != product.getId()){throw new IdNotMatchingException();}
-        //Megkeresem hogy létezik-e az adott termék,ha nem, dob hibát
+    public void updateProduct(int id, ProductUpdateRequest productUpdateRequest) throws IdNotMatchingException,EntityNotFoundException {
+        if (id != productUpdateRequest.id()){throw new IdNotMatchingException();}
         this.getProduct(id);
+        //Megkeresem hogy létezik-e az adott termék,ha nem, dob hibát
+        Product product = Product.builder()
+                .id(productUpdateRequest.id())
+                .description(productUpdateRequest.description())
+                .price(productUpdateRequest.price())
+                .quantity(productUpdateRequest.quantity())
+                .name(productUpdateRequest.name())
+                .categoryId(productUpdateRequest.categoryId())
+                .picture(Base64.decodeBase64(productUpdateRequest.picture().split(",")[1]))
+                .build();
         productRepository.save(product);
     }
 

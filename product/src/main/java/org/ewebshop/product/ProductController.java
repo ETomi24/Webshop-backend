@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 
 @Slf4j
@@ -52,22 +51,22 @@ public class ProductController {
         try {
             productService.createProduct(productCreateRequest);
             return new ResponseEntity<>("Product created", HttpStatus.CREATED);
-        } catch (EntityExistsException exception) {
+        } catch (EntityNotFoundException exception) {
             return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PostMapping("/update/{id}")
-    public void updateProduct(@PathVariable int id, @RequestBody Product product) {
+    public void updateProduct(@PathVariable int id, @RequestBody ProductUpdateRequest productUpdateRequest) {
         try {
-            productService.updateProduct(id,product);
+            productService.updateProduct(id,productUpdateRequest);
         } catch (IdNotMatchingException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
         }
     }
 
-    @PostMapping("/{id}/increase/{amount}")
-    public void increaseQuantity(@PathVariable int id, @PathVariable int amount) {
+    @PostMapping("/increase/{id}")
+    public void increaseQuantity(@PathVariable int id, @RequestBody int amount) {
         try {
             productService.increaseQuantity(id,amount);
         } catch (EntityNotFoundException exception) {
@@ -75,8 +74,8 @@ public class ProductController {
         }
     }
 
-    @PostMapping("/{id}/decrease/{amount}")
-    public void decreaseQuantity(@PathVariable int id, @PathVariable int amount) {
+    @PostMapping("/decrease/{id}")
+    public void decreaseQuantity(@PathVariable int id, @RequestBody int amount) {
         try {
             productService.decreaseQuantity(id,amount);
         } catch (EntityNotFoundException exception) {
@@ -85,7 +84,7 @@ public class ProductController {
     }
 
     @GetMapping("/exists/{id}")
-    public boolean uniqueCheck(@PathVariable Integer id) {
+    public boolean existsCheck(@PathVariable Integer id) {
         try {
             return productService.productExists(id);
         } catch (Exception exception) {

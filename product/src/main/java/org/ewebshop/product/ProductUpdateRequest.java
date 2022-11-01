@@ -2,7 +2,8 @@ package org.ewebshop.product;
 
 import java.math.BigDecimal;
 
-public record ProductCreateRequest(
+public record ProductUpdateRequest(
+        Integer id,
         String description,
         BigDecimal price,
         Integer quantity,
@@ -10,4 +11,5 @@ public record ProductCreateRequest(
         String categoryId,
         String picture
 ) {
+
 }
