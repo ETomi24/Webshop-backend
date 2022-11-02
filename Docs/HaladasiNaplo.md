@@ -39,3 +39,9 @@ A héten a backenden kellet foltozgatni egy két hibát és kimaradó funkciót 
 A bejelentkezés regisztráció váza késze van.Admin felületet kesztem el készíteni még a héten.
 
 
+## 8.hét
+A héten összekötöttem a backendet és a frontendent egymással, ami kezdetben sok időt elvitt, mivel a cors beállítok nem akartak rendensen működni.
+Végül az lett a megoldás hogy nem szervizenkétn kell egyenkét a cors beállításokat felvenni hanem az apiGatewayben.
+Elkészítettem ezentúl az admin felületet ahol termékeket lehet felvenni illetve törölni vagy módósítani.
+Mostantól tárolok már képeket is a backenden hogy színesebb legyen a frontenden egy-egy termék.
+
