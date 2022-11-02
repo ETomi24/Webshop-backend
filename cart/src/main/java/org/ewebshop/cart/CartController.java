@@ -44,7 +44,7 @@ public class CartController {
     }
 
     @GetMapping("/exists/{orderId}/{productId}")
-    public boolean uniqueCheck(@PathVariable int orderId, @PathVariable int productId) {
+    public boolean existsCheck(@PathVariable int orderId, @PathVariable int productId) {
         try {
             return cartService.existsCheck(productId,orderId);
         } catch (Exception exception) {

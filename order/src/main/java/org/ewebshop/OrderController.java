@@ -48,7 +48,7 @@ public class OrderController {
     }
 
     @GetMapping("/exists/{id}")
-    public boolean uniqueCheck(@PathVariable Integer id) {
+    public boolean existsCheck(@PathVariable Integer id) {
         try {
             return orderService.orderExists(id);
         } catch (Exception exception) {

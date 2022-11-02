@@ -55,7 +55,7 @@ public class UserController {
     }
 
     @GetMapping("/exists/{username}")
-    public boolean uniqueCheck(@PathVariable String username) {
+    public boolean existsCheck(@PathVariable String username) {
         try {
             return userService.userExists(username);
         } catch (Exception exception) {
