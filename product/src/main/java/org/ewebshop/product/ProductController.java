@@ -2,6 +2,10 @@ package org.ewebshop.product;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.ewebshop.category.dto.CategoryResponse;
+import org.ewebshop.product.dto.ProductCreateRequest;
+import org.ewebshop.product.dto.ProductResponse;
+import org.ewebshop.product.dto.ProductUpdateRequest;
 import org.ewebshop.product.exception.IdNotMatchingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @AllArgsConstructor
@@ -19,20 +25,41 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getProduct(@PathVariable Integer id){
+    public ProductResponse getProduct(@PathVariable Integer id){
         try {
-            return new ResponseEntity<>(productService.getProduct(id), HttpStatus.OK);
+            Product product = productService.getProduct(id);
+            return new ProductResponse(
+                    product.getId(),
+                    product.getDescription(),
+                    product.getPrice(),
+                    product.getQuantity(),
+                    product.getName(),
+                    new CategoryResponse(product.getCategory().getId(), product.getCategory().getName()),
+                    product.getPicture()
+            );
         } catch (EntityNotFoundException exception) {
-            return new ResponseEntity<>(exception.getMessage(),HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
         }
     }
 
     @GetMapping("/all")
-    public ResponseEntity<?> getAll() {
+    public List<ProductResponse> getAll() {
         try {
-            return new ResponseEntity<>(productService.getAll(), HttpStatus.OK);
+            List<ProductResponse> productResponseList = new ArrayList<>();
+            for (Product product : productService.getAll()){
+                productResponseList.add(new ProductResponse(
+                        product.getId(),
+                        product.getDescription(),
+                        product.getPrice(),
+                        product.getQuantity(),
+                        product.getName(),
+                        new CategoryResponse(product.getCategory().getId(), product.getCategory().getName()),
+                        product.getPicture())
+                );
+            }
+            return productResponseList;
         } catch (Exception exception) {
-            return new ResponseEntity<>(exception.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
         }
     }
 

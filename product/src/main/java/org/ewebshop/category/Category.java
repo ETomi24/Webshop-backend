@@ -1,13 +1,7 @@
 package org.ewebshop.category;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import lombok.*;
+import javax.persistence.*;
 
 @Data
 @Builder
@@ -16,6 +10,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "category")
 public class Category {
-    @Id
+
+    @Id()
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
     private String name;
 }
