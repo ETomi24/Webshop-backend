@@ -1,5 +1,7 @@
 package org.ewebshop.user;
 
+import org.ewebshop.user.dto.UserLoginRequest;
+import org.ewebshop.user.dto.UserRegistrationRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

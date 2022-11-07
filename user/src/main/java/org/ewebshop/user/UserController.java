@@ -3,6 +3,8 @@ package org.ewebshop.user;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.ewebshop.clients.user.UserDto;
+import org.ewebshop.user.dto.UserLoginRequest;
+import org.ewebshop.user.dto.UserRegistrationRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

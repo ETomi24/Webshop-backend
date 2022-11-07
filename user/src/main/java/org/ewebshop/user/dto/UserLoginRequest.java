@@ -1,4 +1,4 @@
-package org.ewebshop.user;
+package org.ewebshop.user.dto;
 
 public record UserLoginRequest(
         String username,
