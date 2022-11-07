@@ -71,6 +71,7 @@ public class ProductService {
 
     public void decreaseQuantity(int id, int amount) {
         Product product = getProduct(id);
+        //TODO ne menjen minuszba :D
         product.setQuantity(product.getQuantity() - amount);
         productRepository.save(product);
     }
