@@ -3,6 +3,7 @@ package org.ewebshop;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.ewebshop.dto.OrderCreateRequest;
+import org.ewebshop.dto.OrderUpdateRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +40,24 @@ public class OrderController {
         }
     }
 
+    @PostMapping("/complete/{id}")
+    public void completeOrder(@PathVariable Integer id) {
+        try {
+            orderService.completeOrder(id);
+        } catch (Exception exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
+        }
+
+    }
+
+    @PostMapping("/update/{id}")
+    public void updateOrder(@PathVariable Integer id, @RequestBody OrderUpdateRequest orderUpdateRequest){
+        try {
+            orderService.orderUpdate(id, orderUpdateRequest);
+        } catch (Exception exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
+        }
+    }
 
     @GetMapping("/finished/{username}")
     public List<Order> getFinishedOrders(@PathVariable String username) {

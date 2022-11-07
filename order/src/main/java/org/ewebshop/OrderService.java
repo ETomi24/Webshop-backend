@@ -52,8 +52,8 @@ public class OrderService {
         }
     }
 
-    public void completeOrder(String userId) throws EntityExistsException, EntityNotFoundException {
-        Order order = getInProgressOrderByUserId(userId);
+    public void completeOrder(int id) throws EntityExistsException, EntityNotFoundException {
+        Order order = getOrderById(id);
         order.setStatus(Status.FINISHED);
         orderRepository.save(order);
     }
