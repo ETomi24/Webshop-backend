@@ -54,6 +54,7 @@ public class CartService {
     }
 
     public void removeCartItem(int productId, int orderId, int quantity) {
+        //TODO rename delete cart item if quantity zero
         Optional<Cart> cart = cartRepository.findById(new CartId(productId,orderId));
         if (cart.isPresent()) {
             Cart cartEntity = cart.get();

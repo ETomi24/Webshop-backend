@@ -12,10 +12,10 @@ public interface ProductClient {
     @GetMapping("api/products/exists/{id}")
     boolean existsCheck(@PathVariable("id") Integer id);
 
-    @PostMapping(value = "/decrease/{id}", consumes = "application/json")
+    @PostMapping(value = "api/products/decrease/{id}", consumes = "application/json")
     void decreaseQuantity(@PathVariable("id") int id, @RequestBody int amount);
 
-    @PostMapping(value = "/increase/{id}", consumes = "application/json")
+    @PostMapping(value = "api/products/increase/{id}", consumes = "application/json")
     void increaseQuantity(@PathVariable("id") int id, @RequestBody int amount);
 
 }

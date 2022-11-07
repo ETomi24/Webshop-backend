@@ -71,17 +71,23 @@ public class OrderService {
 
     public void orderCreate(OrderCreateRequest orderCreateRequest) throws EntityNotFoundException {
         //check if user existing
-        boolean exist = userClient.existsCheck(orderCreateRequest.userId());
-        if (exist) {
-            orderRepository.save(Order.builder()
-                    .userId(orderCreateRequest.userId())
-                    .creationDate(LocalDateTime.now())
-                    .status(Status.IN_PROGRESS)
-                    .build()
-            );
+        boolean userExists = userClient.existsCheck(orderCreateRequest.userId());
+        Optional<Order> order = orderRepository.findByUserIdAndStatus(orderCreateRequest.userId(), Status.IN_PROGRESS);
+        if (order.isEmpty()){
+            if (userExists) {
+                orderRepository.save(Order.builder()
+                        .userId(orderCreateRequest.userId())
+                        .creationDate(LocalDateTime.now())
+                        .status(Status.IN_PROGRESS)
+                        .build()
+                );
+            } else {
+                throw new EntityNotFoundException("User is not existing");
+            }
         } else {
-            throw new EntityNotFoundException("User is not existing");
+            throw new EntityExistsException("This user already have an In_Progress order");
         }
+
     }
 
     public boolean orderExists(int id) {

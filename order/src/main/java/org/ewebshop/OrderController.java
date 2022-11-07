@@ -26,7 +26,7 @@ public class OrderController {
         try{
             orderService.orderCreate(orderCreateRequest);
             return new ResponseEntity<>("Order created", HttpStatus.OK);
-        } catch (EntityExistsException exception) {
+        } catch (Exception exception) {
             return new ResponseEntity<>(exception.getMessage() , HttpStatus.NOT_FOUND);
         }
     }
