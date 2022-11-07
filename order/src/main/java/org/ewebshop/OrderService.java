@@ -2,6 +2,9 @@ package org.ewebshop;
 
 import lombok.AllArgsConstructor;
 import org.ewebshop.clients.user.UserClient;
+import org.ewebshop.dto.OrderCreateRequest;
+import org.ewebshop.dto.OrderUpdateRequest;
+import org.ewebshop.exception.IdNotMatchingException;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
@@ -26,27 +29,58 @@ public class OrderService {
 
     }
 
-    public List<Order> getFinishedOrdersByUserId(String userId) throws EntityExistsException{
+    public List<Order> getFinishedOrdersByUserId(String userId) throws EntityNotFoundException{
         boolean exist = userClient.existsCheck(userId);
         if (exist) {
             return orderRepository.findAllByUserIdAndStatus(userId, Status.FINISHED);
         } else {
-            throw new EntityExistsException("User is not existing");
+            throw new EntityNotFoundException("User is not existing");
         }
     }
 
-    public void orderCreate(String userId) throws EntityExistsException {
-        //check if user existing
+    public Order getInProgressOrderByUserId(String userId) throws EntityNotFoundException {
         boolean exist = userClient.existsCheck(userId);
         if (exist) {
+            Optional<Order> order = orderRepository.findByUserIdAndStatus(userId, Status.IN_PROGRESS);
+            if(order.isPresent()){
+                return order.get();
+            } else {
+                throw new EntityNotFoundException("Order is not existing");
+            }
+        } else {
+            throw new EntityNotFoundException("User is not existing");
+        }
+    }
+
+    public void completeOrder(String userId) throws EntityExistsException, EntityNotFoundException {
+        Order order = getInProgressOrderByUserId(userId);
+        order.setStatus(Status.FINISHED);
+        orderRepository.save(order);
+    }
+
+    public void orderUpdate(int id, OrderUpdateRequest orderUpdateRequest) throws IdNotMatchingException, EntityNotFoundException {
+        if (id != orderUpdateRequest.id()) {
+            throw new IdNotMatchingException();
+        }
+        Order order = this.getOrderById(id);
+        order.setStatus(orderUpdateRequest.status());
+        order.setDeliveryDate(orderUpdateRequest.deliveryDate());
+        order.setCreationDate(orderUpdateRequest.creationDate());
+        order.setTotalPrice(orderUpdateRequest.totalPrice());
+    }
+
+    public void orderCreate(OrderCreateRequest orderCreateRequest) throws EntityNotFoundException {
+        //check if user existing
+        boolean exist = userClient.existsCheck(orderCreateRequest.userId());
+        if (exist) {
             orderRepository.save(Order.builder()
-                    .userId(userId)
+                    .userId(orderCreateRequest.userId())
                     .creationDate(LocalDateTime.now())
                     .status(Status.IN_PROGRESS)
                     .build()
             );
         } else {
-            throw new EntityExistsException("User is not existing");
+            throw new EntityNotFoundException("User is not existing");
         }
     }
 

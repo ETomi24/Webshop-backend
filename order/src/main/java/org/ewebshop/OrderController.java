@@ -2,6 +2,7 @@ package org.ewebshop;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.ewebshop.dto.OrderCreateRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +20,10 @@ public class OrderController {
 
     private final OrderService orderService;
 
-    @PostMapping("/create/{username}")
-    public ResponseEntity<Object> createOrder(@PathVariable String username) {
+    @PostMapping("/create")
+    public ResponseEntity<Object> createOrder(@RequestBody OrderCreateRequest orderCreateRequest) {
         try{
-            orderService.orderCreate(username);
+            orderService.orderCreate(orderCreateRequest);
             return new ResponseEntity<>("Order created", HttpStatus.OK);
         } catch (EntityExistsException exception) {
             return new ResponseEntity<>(exception.getMessage() , HttpStatus.NOT_FOUND);
@@ -38,10 +39,20 @@ public class OrderController {
         }
     }
 
+
     @GetMapping("/finished/{username}")
     public List<Order> getFinishedOrders(@PathVariable String username) {
         try {
             return orderService.getFinishedOrdersByUserId(username);
+        } catch (Exception exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
+        }
+    }
+
+    @GetMapping("/in_progress/{username}")
+    public Order getInProgressOrder(@PathVariable String username) {
+        try {
+            return orderService.getInProgressOrderByUserId(username);
         } catch (Exception exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
         }
