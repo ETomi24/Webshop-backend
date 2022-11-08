@@ -36,14 +36,14 @@ public class CartService {
                 if (cart.isPresent()) {
                     Cart cartEntity = cart.get();
                     cartEntity.setQuantity(cartEntity.getQuantity() + quantity);
-                    cartRepository.save(cartEntity);
                     //csökkentem a product mennyiséget a raktárban
                     productClient.decreaseQuantity(productId, quantity);
+                    cartRepository.save(cartEntity);
                 } else {
                     Cart newCartEntity = new Cart(productId,orderId,quantity);
-                    cartRepository.save(newCartEntity);
                     //csökkentem a product mennyiséget a raktárban
                     productClient.decreaseQuantity(productId, quantity);
+                    cartRepository.save(newCartEntity);
                 }
             } else {
                 throw new EntityNotFoundException("Product is not existing");
