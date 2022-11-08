@@ -37,12 +37,12 @@ public class CartService {
                     Cart cartEntity = cart.get();
                     cartEntity.setQuantity(cartEntity.getQuantity() + quantity);
                     cartRepository.save(cartEntity);
-                    //TODO csökkenteni a product mennyiséget a raktárban
+                    //csökkentem a product mennyiséget a raktárban
                     productClient.decreaseQuantity(productId, quantity);
                 } else {
                     Cart newCartEntity = new Cart(productId,orderId,quantity);
                     cartRepository.save(newCartEntity);
-                    //TODO csökkenteni a product mennyiséget a raktárban
+                    //csökkentem a product mennyiséget a raktárban
                     productClient.decreaseQuantity(productId, quantity);
                 }
             } else {
@@ -54,13 +54,17 @@ public class CartService {
     }
 
     public void removeCartItem(int productId, int orderId, int quantity) {
-        //TODO rename delete cart item if quantity zero
         Optional<Cart> cart = cartRepository.findById(new CartId(productId,orderId));
         if (cart.isPresent()) {
             Cart cartEntity = cart.get();
             cartEntity.setQuantity(cartEntity.getQuantity() - quantity);
-            cartRepository.save(cartEntity);
+            if (cartEntity.getQuantity() <= 0) {
+                cartRepository.delete(cartEntity);
+            } else {
+                cartRepository.save(cartEntity);
+            }
             productClient.increaseQuantity(productId, quantity);
+
         } else {
             throw new EntityNotFoundException("CartItem is not existing");
         }
