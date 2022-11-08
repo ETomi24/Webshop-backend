@@ -7,6 +7,7 @@ import org.ewebshop.category.CategoryService;
 import org.ewebshop.product.dto.ProductCreateRequest;
 import org.ewebshop.product.dto.ProductUpdateRequest;
 import org.ewebshop.product.exception.IdNotMatchingException;
+import org.ewebshop.product.exception.MinusQuantityException;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -69,9 +70,11 @@ public class ProductService {
     }
 
 
-    public void decreaseQuantity(int id, int amount) {
+    public void decreaseQuantity(int id, int amount) throws MinusQuantityException {
         Product product = getProduct(id);
-        //TODO ne menjen minuszba :D
+        if (product.getQuantity() - amount  < 0) {
+            throw new MinusQuantityException();
+        }
         product.setQuantity(product.getQuantity() - amount);
         productRepository.save(product);
     }

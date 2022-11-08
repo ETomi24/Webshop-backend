@@ -7,6 +7,7 @@ import org.ewebshop.product.dto.ProductCreateRequest;
 import org.ewebshop.product.dto.ProductResponse;
 import org.ewebshop.product.dto.ProductUpdateRequest;
 import org.ewebshop.product.exception.IdNotMatchingException;
+import org.ewebshop.product.exception.MinusQuantityException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -105,7 +106,7 @@ public class ProductController {
     public void decreaseQuantity(@PathVariable int id, @RequestBody int amount) {
         try {
             productService.decreaseQuantity(id,amount);
-        } catch (EntityNotFoundException exception) {
+        } catch (EntityNotFoundException | MinusQuantityException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
         }
     }
