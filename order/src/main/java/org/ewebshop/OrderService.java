@@ -90,6 +90,10 @@ public class OrderService {
 
     }
 
+    public void orderDelete(int id) {
+        orderRepository.deleteById(id);
+    }
+
     public boolean orderExists(int id) {
         return orderRepository.existsById(id);
     }

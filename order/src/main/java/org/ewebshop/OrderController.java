@@ -85,4 +85,13 @@ public class OrderController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
         }
     }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteOrder(@PathVariable Integer id) {
+        try {
+            orderService.orderDelete(id);
+        } catch (Exception exception) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
+        }
+    }
 }
