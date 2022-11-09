@@ -22,7 +22,9 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(length=1000)
     private String description;
+
     private BigDecimal price;
     private Integer quantity;
     private String name;
