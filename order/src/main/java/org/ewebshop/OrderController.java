@@ -22,12 +22,11 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("/create")
-    public ResponseEntity<Object> createOrder(@RequestBody OrderCreateRequest orderCreateRequest) {
+    public void createOrder(@RequestBody OrderCreateRequest orderCreateRequest) {
         try{
             orderService.orderCreate(orderCreateRequest);
-            return new ResponseEntity<>("Order created", HttpStatus.OK);
         } catch (Exception exception) {
-            return new ResponseEntity<>(exception.getMessage() , HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,exception.getMessage());
         }
     }
 
