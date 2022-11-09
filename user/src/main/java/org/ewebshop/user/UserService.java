@@ -30,6 +30,7 @@ public class UserService {
                     .username(userRegistrationRequest.username())
                     .phoneNumber(userRegistrationRequest.phoneNumber())
                     .password(passwordEncoder.encode(userRegistrationRequest.password()))
+                    .address(userRegistrationRequest.address())
                     .role(userRegistrationRequest.role())
                     .build();
             userRepository.save(user);
