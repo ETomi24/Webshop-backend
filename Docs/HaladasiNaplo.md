@@ -45,3 +45,7 @@ Végül az lett a megoldás hogy nem szervizenkétn kell egyenkét a cors beáll
 Elkészítettem ezentúl az admin felületet ahol termékeket lehet felvenni illetve törölni vagy módósítani.
 Mostantól tárolok már képeket is a backenden hogy színesebb legyen a frontenden egy-egy termék.
 
+## 9.hét
+A héten probáltam szépíteni a frontendet. Pár oldal kivételével minden elkészült. Backenden pedig a hiányoságokat,
+amikre szükség volt azokat potoltam. 
+
