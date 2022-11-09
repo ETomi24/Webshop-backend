@@ -51,10 +51,10 @@ public class JwtTokenUtil implements Serializable {
         Map<String, Object> claims = new HashMap<>();
         Collection<? extends GrantedAuthority> roles = userDetails.getAuthorities();
 
-        if (roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+        if (roles.contains(new SimpleGrantedAuthority("ADMIN"))) {
             claims.put("isAdmin", true);
         }
-        if (roles.contains(new SimpleGrantedAuthority("ROLE_CUSTOMER"))) {
+        if (roles.contains(new SimpleGrantedAuthority("CUSTOMER"))) {
             claims.put("isCustomer", true);
         }
         return doGenerateToken(claims, userDetails.getUsername());
@@ -76,22 +76,19 @@ public class JwtTokenUtil implements Serializable {
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-    public List<SimpleGrantedAuthority> getRolesFromToken(String token) {
+    public SimpleGrantedAuthority getRoleFromToken(String token) {
         Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
-
-        List<SimpleGrantedAuthority> roles = null;
-
+        SimpleGrantedAuthority role = null;
         Boolean isAdmin = claims.get("isAdmin", Boolean.class);
         Boolean isCustomer = claims.get("isCustomer", Boolean.class);
 
         if (isAdmin != null && isAdmin) {
-            roles = List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            role = new SimpleGrantedAuthority("ADMIN");
         }
-
-        if (isCustomer != null && Boolean.TRUE.equals(isAdmin)) {
-            roles = List.of(new SimpleGrantedAuthority("ROLE_CUSTOMER"));
+        if (isCustomer != null && isCustomer) {
+            role = new SimpleGrantedAuthority("CUSTOMER");
         }
-        return roles;
+        return role;
 
     }
 }

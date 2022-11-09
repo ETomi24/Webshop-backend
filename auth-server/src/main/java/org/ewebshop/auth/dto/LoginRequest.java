@@ -1,4 +1,4 @@
-package org.ewebshop.auth;
+package org.ewebshop.auth.dto;
 
 public record LoginRequest(
         String username,
