@@ -2,12 +2,15 @@ package org.ewebshop.user;
 
 import org.ewebshop.user.dto.UserLoginRequest;
 import org.ewebshop.user.dto.UserRegistrationRequest;
+import org.ewebshop.user.dto.UserUpdateRequest;
+import org.ewebshop.user.exception.IdNotMatchingException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import javax.security.auth.login.LoginException;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -37,13 +40,13 @@ public class UserService {
         }
     }
 
-    public String login(UserLoginRequest userLoginRequest) throws EntityNotFoundException, LoginException {
-        User user = getByUsername(userLoginRequest.username());
-        if (passwordEncoder.matches(userLoginRequest.password(),user.getPassword())) {
-            return "token";
-        } else {
-            throw new LoginException("Bad password");
-        }
+    public void updateUser(String username, UserUpdateRequest userUpdateRequest) throws IdNotMatchingException, EntityNotFoundException {
+        if (!Objects.equals(username, userUpdateRequest.username())){throw new IdNotMatchingException();}
+        User user = getByUsername(username);
+        user.setAddress(userUpdateRequest.address());
+        user.setEmail(userUpdateRequest.email());
+        user.setPhoneNumber(userUpdateRequest.phoneNumber());
+        userRepository.save(user);
     }
 
 
@@ -59,5 +62,4 @@ public class UserService {
     public boolean userExists(String username){
         return userRepository.existsById(username);
     }
-
 }

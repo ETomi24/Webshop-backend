@@ -3,16 +3,14 @@ package org.ewebshop.user;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.ewebshop.clients.user.UserDto;
-import org.ewebshop.user.dto.UserLoginRequest;
 import org.ewebshop.user.dto.UserRegistrationRequest;
+import org.ewebshop.user.dto.UserUpdateRequest;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
-import javax.security.auth.login.LoginException;
 
 
 @Slf4j
@@ -33,25 +31,21 @@ public class UserController {
         }
     }
 
-    @GetMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserLoginRequest userLoginRequest) {
-        log.info("new login {}", userLoginRequest);
-        try {
-            return new ResponseEntity<>(userService.login(userLoginRequest), HttpStatus.OK);
-        } catch (EntityNotFoundException exception) {
-            return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
-        } catch (LoginException exception) {
-            return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-
     @GetMapping("/{username}")
     public UserDto getByUsername(@PathVariable String username) {
         try {
             User user = userService.getByUsername(username);
             return new UserDto(user.getUsername(),user.getEmail(),user.getPassword(),user.getAddress(),user.getPhoneNumber(),user.getRole().name());
         } catch (EntityNotFoundException exception) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
+        }
+    }
+
+    @PostMapping("/update/{username}")
+    public void updateUser(@PathVariable String username, @RequestBody UserUpdateRequest userUpdateRequest) {
+        try {
+            userService.updateUser(username, userUpdateRequest);
+        } catch (Exception exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
         }
     }
