@@ -8,7 +8,7 @@ public record OrderUpdateRequest(
         Integer id,
         Long totalPrice,
         LocalDateTime creationDate,
-        LocalDateTime deliveryDate,
+        LocalDateTime completeDate,
         Status status,
         String userId
 ) {

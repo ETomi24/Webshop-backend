@@ -64,9 +64,11 @@ public class OrderService {
         }
         Order order = this.getOrderById(id);
         order.setStatus(orderUpdateRequest.status());
-        order.setDeliveryDate(orderUpdateRequest.deliveryDate());
+        order.setCompleteDate(orderUpdateRequest.completeDate());
         order.setCreationDate(orderUpdateRequest.creationDate());
         order.setTotalPrice(orderUpdateRequest.totalPrice());
+        System.out.println(order);
+        orderRepository.save(order);
     }
 
     public void orderCreate(OrderCreateRequest orderCreateRequest) throws EntityNotFoundException {

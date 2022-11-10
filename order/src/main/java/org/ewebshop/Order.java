@@ -27,7 +27,7 @@ public class Order {
     private Integer id;
     private Long totalPrice;
     private LocalDateTime creationDate;
-    private LocalDateTime deliveryDate;
+    private LocalDateTime completeDate;
     private Status status;
     private String userId;
 
