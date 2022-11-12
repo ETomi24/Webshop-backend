@@ -1,4 +1,4 @@
-package org.ewebshop.auth;
+package org.ewebshop.commons.security;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

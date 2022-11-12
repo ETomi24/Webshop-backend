@@ -84,7 +84,7 @@ public class ProductController {
         }
     }
 
-    @PostMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public void updateProduct(@PathVariable int id, @RequestBody ProductUpdateRequest productUpdateRequest) {
         try {
             productService.updateProduct(id,productUpdateRequest);
@@ -93,7 +93,7 @@ public class ProductController {
         }
     }
 
-    @PostMapping("/increase/{id}")
+    @PutMapping("/increase/{id}")
     public void increaseQuantity(@PathVariable int id, @RequestBody int amount) {
         try {
             productService.increaseQuantity(id,amount);
@@ -102,7 +102,7 @@ public class ProductController {
         }
     }
 
-    @PostMapping("/decrease/{id}")
+    @PutMapping("/decrease/{id}")
     public void decreaseQuantity(@PathVariable int id, @RequestBody int amount) {
         try {
             productService.decreaseQuantity(id,amount);

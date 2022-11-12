@@ -1,4 +1,4 @@
-package org.ewebshop.dto;
+package org.ewebshop.order.dto;
 
 public record OrderCreateRequest(
         String userId

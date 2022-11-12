@@ -1,10 +1,10 @@
-package org.ewebshop;
+package org.ewebshop.order;
 
 import lombok.AllArgsConstructor;
 import org.ewebshop.commons.clients.user.UserClient;
-import org.ewebshop.dto.OrderCreateRequest;
-import org.ewebshop.dto.OrderUpdateRequest;
-import org.ewebshop.exception.IdNotMatchingException;
+import org.ewebshop.order.dto.OrderCreateRequest;
+import org.ewebshop.order.dto.OrderUpdateRequest;
+import org.ewebshop.order.exception.IdNotMatchingException;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
@@ -67,7 +67,6 @@ public class OrderService {
         order.setCompleteDate(orderUpdateRequest.completeDate());
         order.setCreationDate(orderUpdateRequest.creationDate());
         order.setTotalPrice(orderUpdateRequest.totalPrice());
-        System.out.println(order);
         orderRepository.save(order);
     }
 

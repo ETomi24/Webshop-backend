@@ -1,4 +1,4 @@
-package org.ewebshop;
+package org.ewebshop.order;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

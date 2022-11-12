@@ -1,4 +1,4 @@
-package org.ewebshop.auth;
+package org.ewebshop.security;
 
 import org.ewebshop.commons.security.JwtAuthenticationEntryPoint;
 import org.ewebshop.commons.security.JwtRequestFilter;
@@ -6,6 +6,7 @@ import org.ewebshop.commons.security.JwtUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -20,8 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
+public class ProductServiceWebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
@@ -50,12 +50,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
-                .authorizeRequests().antMatchers("/api/auth/login").permitAll()
-                .anyRequest().authenticated()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET,"/api/products/**", "/api/categories/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/products/**", "/api/categories/**").hasAnyRole("ADMIN")
+                .antMatchers(HttpMethod.PATCH, "/api/products/**", "/api/categories/**").hasAnyRole("ADMIN","CUSTOMER")
+                .antMatchers(HttpMethod.PUT, "/api/products/**", "/api/categories/**").hasAnyRole("ADMIN", "CUSTOMER")
+                .antMatchers(HttpMethod.DELETE, "/api/products/**","/api/categories/**").hasAnyRole("ADMIN")
                 .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
         //filter to validate the tokens with every request
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }

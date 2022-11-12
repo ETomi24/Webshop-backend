@@ -4,11 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.ewebshop.auth.dto.JwtResponse;
 import org.ewebshop.auth.dto.LoginRequest;
+import org.ewebshop.commons.security.JwtTokenUtil;
+import org.ewebshop.commons.security.JwtUserDetailsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
@@ -36,15 +37,6 @@ public class AuthController {
         } catch (UsernameNotFoundException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,exception.getMessage());
         } catch (AuthenticationException exception) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,exception.getMessage());
-        }
-    }
-
-    @GetMapping(value = "/role/{token}")
-    public SimpleGrantedAuthority getRoleFromToken(@PathVariable String token) {
-        try {
-            return jwtTokenUtil.getRoleFromToken(token);
-        } catch (Exception exception) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,exception.getMessage());
         }
     }

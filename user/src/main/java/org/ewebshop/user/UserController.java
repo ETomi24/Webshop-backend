@@ -41,7 +41,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/update/{username}")
+    @PatchMapping("/update/{username}")
     public void updateUser(@PathVariable String username, @RequestBody UserUpdateRequest userUpdateRequest) {
         try {
             userService.updateUser(username, userUpdateRequest);

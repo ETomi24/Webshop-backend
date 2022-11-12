@@ -1,4 +1,4 @@
-package org.ewebshop.exception;
+package org.ewebshop.order.exception;
 
 public class IdNotMatchingException extends Exception{
     public IdNotMatchingException() {

@@ -1,4 +1,4 @@
-package org.ewebshop.auth;
+package org.ewebshop.commons.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -10,14 +10,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 @Component
 public class JwtTokenUtil implements Serializable {
     public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
 
-    @Value("${security.jwt.secret}")
+    @Value("titkos")
     private String secret;
 
     //get username from jwt token

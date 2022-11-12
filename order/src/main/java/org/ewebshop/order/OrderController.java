@@ -1,15 +1,13 @@
-package org.ewebshop;
+package org.ewebshop.order;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.ewebshop.dto.OrderCreateRequest;
-import org.ewebshop.dto.OrderUpdateRequest;
+import org.ewebshop.order.dto.OrderCreateRequest;
+import org.ewebshop.order.dto.OrderUpdateRequest;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
@@ -39,7 +37,7 @@ public class OrderController {
         }
     }
 
-    @PostMapping("/complete/{id}")
+    @PatchMapping ("/complete/{id}")
     public void completeOrder(@PathVariable Integer id) {
         try {
             orderService.completeOrder(id);
@@ -49,7 +47,7 @@ public class OrderController {
 
     }
 
-    @PostMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public void updateOrder(@PathVariable Integer id, @RequestBody OrderUpdateRequest orderUpdateRequest){
         try {
             orderService.orderUpdate(id, orderUpdateRequest);

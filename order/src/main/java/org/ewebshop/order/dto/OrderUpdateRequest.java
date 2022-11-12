@@ -1,6 +1,6 @@
-package org.ewebshop.dto;
+package org.ewebshop.order.dto;
 
-import org.ewebshop.Status;
+import org.ewebshop.order.Status;
 
 import java.time.LocalDateTime;
 

@@ -71,7 +71,7 @@ public class CategoryController {
         }
     }
 
-    @PostMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public void updateCategory(@PathVariable Integer id, @RequestBody CategoryUpdateRequest categoryUpdateRequest) {
         try {
             categoryService.updateCategory(id, categoryUpdateRequest);
