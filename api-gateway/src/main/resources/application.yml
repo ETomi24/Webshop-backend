@@ -18,6 +18,7 @@ spring:
               - POST
               - DELETE
               - PUT
+              - PATCH
       routes:
         - id: user
           uri: lb://USER
