@@ -1,4 +1,4 @@
-package org.ewebshop.clients.user;
+package org.ewebshop.commons.clients.user;
 
 
 public record UserDto(String username,

@@ -1,8 +1,8 @@
 package org.ewebshop.cart;
 
 import lombok.AllArgsConstructor;
-import org.ewebshop.clients.order.OrderClient;
-import org.ewebshop.clients.product.ProductClient;
+import org.ewebshop.commons.clients.order.OrderClient;
+import org.ewebshop.commons.clients.product.ProductClient;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;

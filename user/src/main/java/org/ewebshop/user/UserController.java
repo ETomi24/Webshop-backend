@@ -2,7 +2,7 @@ package org.ewebshop.user;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.ewebshop.clients.user.UserDto;
+import org.ewebshop.commons.clients.user.UserDto;
 import org.ewebshop.user.dto.UserRegistrationRequest;
 import org.ewebshop.user.dto.UserUpdateRequest;
 import org.springframework.http.HttpStatus;

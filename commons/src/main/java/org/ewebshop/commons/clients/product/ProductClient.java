@@ -1,4 +1,4 @@
-package org.ewebshop.clients.product;
+package org.ewebshop.commons.clients.product;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

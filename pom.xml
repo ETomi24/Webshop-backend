@@ -15,7 +15,7 @@
         <module>product</module>
         <module>cart</module>
         <module>eureka-server</module>
-        <module>clients</module>
+        <module>commons</module>
         <module>api-gateway</module>
         <module>auth-server</module>
     </modules>

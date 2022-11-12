@@ -1,7 +1,7 @@
 package org.ewebshop;
 
 import lombok.AllArgsConstructor;
-import org.ewebshop.clients.user.UserClient;
+import org.ewebshop.commons.clients.user.UserClient;
 import org.ewebshop.dto.OrderCreateRequest;
 import org.ewebshop.dto.OrderUpdateRequest;
 import org.ewebshop.exception.IdNotMatchingException;
