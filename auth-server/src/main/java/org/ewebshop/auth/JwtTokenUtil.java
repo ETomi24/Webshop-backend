@@ -51,10 +51,10 @@ public class JwtTokenUtil implements Serializable {
         Map<String, Object> claims = new HashMap<>();
         Collection<? extends GrantedAuthority> roles = userDetails.getAuthorities();
 
-        if (roles.contains(new SimpleGrantedAuthority("ADMIN"))) {
+        if (roles.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
             claims.put("isAdmin", true);
         }
-        if (roles.contains(new SimpleGrantedAuthority("CUSTOMER"))) {
+        if (roles.contains(new SimpleGrantedAuthority("ROLE_CUSTOMER"))) {
             claims.put("isCustomer", true);
         }
         return doGenerateToken(claims, userDetails.getUsername());
@@ -83,10 +83,10 @@ public class JwtTokenUtil implements Serializable {
         Boolean isCustomer = claims.get("isCustomer", Boolean.class);
 
         if (isAdmin != null && isAdmin) {
-            role = new SimpleGrantedAuthority("ADMIN");
+            role = new SimpleGrantedAuthority("ROLE_ADMIN");
         }
         if (isCustomer != null && isCustomer) {
-            role = new SimpleGrantedAuthority("CUSTOMER");
+            role = new SimpleGrantedAuthority("ROLE_CUSTOMER");
         }
         return role;
 

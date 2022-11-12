@@ -2,10 +2,9 @@ package org.ewebshop.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.ewebshop.clients.user.UserClient;
-import org.ewebshop.clients.user.UserDto;
+import org.ewebshop.commons.clients.user.UserClient;
+import org.ewebshop.commons.clients.user.UserDto;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Objects;
 
 @Slf4j
 @Service
@@ -26,7 +24,7 @@ public class JwtUserDetailsService implements UserDetailsService {
         if (user.username() != null){
             log.info("User found in the database: {}", username);
             Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(new SimpleGrantedAuthority(user.role()));
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + user.role()));
             return new org.springframework.security.core.userdetails.User(user.username(), user.password(), authorities);
         } else {
             log.error("User not found in the database");
