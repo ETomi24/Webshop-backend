@@ -20,6 +20,21 @@
         <module>auth-server</module>
     </modules>
 
+    <name>webshop-backend</name>
+    <url>https://www.ewebshop.com</url>
+
+    <properties>
+        <jib.maven.plugin.version>3.1.4</jib.maven.plugin.version>
+        <spring.cloud-version>2020.0.3</spring.cloud-version>
+        <spring.boot.dependencies.version>2.5.7</spring.boot.dependencies.version>
+        <spring.boot.maven.plugin.version>2.5.7</spring.boot.maven.plugin.version>
+        <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
+        <maven.compiler.plugin.source>17</maven.compiler.plugin.source>
+        <maven.compiler.plugin.target>17</maven.compiler.plugin.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <image>etomi24/${project.artifactId}:${project.version}</image>
+    </properties>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -33,8 +48,8 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring.cloud-version}</version>
-                <type>pom</type>
                 <scope>import</scope>
+                <type>pom</type>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -61,21 +76,49 @@
                     <groupId>org.springframework</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>${spring.boot.maven.plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>repackage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>com.google.cloud.tools</groupId>
+                    <artifactId>jib-maven-plugin</artifactId>
+                    <version>${jib.maven.plugin.version}</version>
+                    <configuration>
+                        <from>
+                            <image>eclipse-temurin:17@sha256:2b47a8ea946ce1e5365a1562414ed576e378b7b670cadff3fb98ebecf2890cdc</image>
+                        </from>
+                        <to>
+                            <tags>
+                                <tag>latest</tag>
+                            </tags>
+                        </to>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>build</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin.version}</version>
+                <configuration>
+                    <source>${maven.compiler.plugin.source}</source>
+                    <target>${maven.compiler.plugin.target}</target>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
-
-    <name>webshop-backend</name>
-    <url>https://www.ewebshop.com</url>
-
-    <properties>
-        <spring.cloud-version>2020.0.3</spring.cloud-version>
-        <spring.boot.dependencies.version>2.5.7</spring.boot.dependencies.version>
-        <spring.boot.maven.plugin.version>2.5.7</spring.boot.maven.plugin.version>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
 </project>

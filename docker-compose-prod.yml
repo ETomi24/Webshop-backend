@@ -1,0 +1,141 @@
+services:
+  postgres:
+    container_name: postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - spring
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - "5050:80"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+  eureka-server:
+    image: etomi24/eureka-server:latest
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=prod"
+    networks:
+      - spring
+    depends_on:
+      - zipkin
+
+  api-gateway:
+    image: etomi24/api-gateway:latest
+    container_name: api-gateway
+    ports:
+      - "8085:8085"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=prod"
+    networks:
+      - spring
+    depends_on:
+      - zipkin
+      - eureka-server
+  auth-server:
+    image: etomi24/auth-server:latest
+    container_name: auth-server
+    ports:
+      - "8084:8084"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=prod"
+    networks:
+      - spring
+    depends_on:
+      - zipkin
+      - eureka-server
+  cart:
+    image: etomi24/cart:latest
+    container_name: cart
+    ports:
+      - "8083:8083"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=prod"
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - zipkin
+      - eureka-server
+      - postgres
+  order:
+    image: etomi24/order:latest
+    container_name: order
+    ports:
+      - "8081:8081"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=prod"
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - zipkin
+      - eureka-server
+      - postgres
+  product:
+    image: etomi24/product:latest
+    container_name: product
+    ports:
+      - "8082:8082"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=prod"
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - zipkin
+      - eureka-server
+      - postgres
+  user:
+    image: etomi24/user:latest
+    container_name: user
+    ports:
+      - "8080:8080"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=prod"
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - zipkin
+      - eureka-server
+      - postgres
+
+networks:
+  postgres:
+    driver: bridge
+  spring:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:
