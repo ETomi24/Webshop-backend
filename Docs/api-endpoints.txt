@@ -1,0 +1,42 @@
+Cart
+POST http://localhost:8083/api/carts/add/{orderId}/{productId}
+GET http://localhost:8083/api/carts/all/{orderId}
+GET http://localhost:8083/api/carts/exists/{orderId}/{productId}
+POST http://localhost:8083/api/carts/remove/{orderId}/{productId}
+
+Auth
+POST http://localhost:8084/api/auth/login
+
+
+Order
+PATCH http://localhost:8081/api/orders/complete/{id}
+POST http://localhost:8081/api/orders/create
+DELETE http://localhost:8081/api/orders/delete/{id}
+GET http://localhost:8081/api/orders/exists/{id}
+GET http://localhost:8081/api/orders/finished/{username}
+GET http://localhost:8081/api/orders/in_progress/{username}
+PUT http://localhost:8081/api/orders/update/{id}
+GET http://localhost:8081/api/orders/{id}
+
+Product
+GET http://localhost:8082/api/products/all
+POST http://localhost:8082/api/products/create
+PUT http://localhost:8082/api/products/decrease/{id}
+DELETE http://localhost:8082/api/products/delete/{id}
+GET http://localhost:8082/api/products/exists/{id}
+PUT http://localhost:8082/api/products/increase/{id}
+PUT http://localhost:8082/api/products/update/{id}
+GET http://localhost:8082/api/products/{{id}}
+
+Categories
+GET http://localhost:8082/api/categories/all
+POST http://localhost:8082/api/categories/create
+DELETE http://localhost:8082/api/categories/delete/{id}
+PUT http://localhost:8082/api/categories/update/{id}
+GET http://localhost:8082/api/categories/{id}
+
+User
+GET http://localhost:8080/api/users/exists/{username}
+POST http://localhost:8080/api/users/register
+PATCH http://localhost:8080/api/users/update/{username}
+GET http://localhost:8080/api/users/{username}
