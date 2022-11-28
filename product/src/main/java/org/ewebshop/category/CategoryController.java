@@ -49,25 +49,23 @@ public class CategoryController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteCategory(@PathVariable Integer id) {
+    public void deleteCategory(@PathVariable Integer id) {
         try{
             categoryService.deleteCategory(id);
-            return new ResponseEntity<>("Deleted", HttpStatus.OK);
         } catch (EntityNotFoundException exception) {
-            return new ResponseEntity<>(exception.getMessage(),HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
         } catch (DeleteException exception) {
-            return new ResponseEntity<>(exception.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
         }
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createCategory(@RequestBody CategoryCreateRequest categoryCreateRequest) {
+    public void createCategory(@RequestBody CategoryCreateRequest categoryCreateRequest) {
         try {
             log.info(categoryCreateRequest.toString());
             categoryService.createCategory(categoryCreateRequest);
-            return new ResponseEntity<>("Category created", HttpStatus.CREATED);
         } catch (EntityExistsException exception) {
-            return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
         }
     }
 

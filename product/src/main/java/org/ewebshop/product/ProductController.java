@@ -65,22 +65,20 @@ public class ProductController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteProduct(@PathVariable Integer id) {
+    public void deleteProduct(@PathVariable Integer id) {
         try {
             productService.deleteProduct(id);
-            return new ResponseEntity<>("Deleted", HttpStatus.OK);
         } catch (EntityNotFoundException exception) {
-            return new ResponseEntity<>(exception.getMessage(),HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
         }
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createProduct(@RequestBody ProductCreateRequest productCreateRequest) {
+    public void createProduct(@RequestBody ProductCreateRequest productCreateRequest) {
         try {
             productService.createProduct(productCreateRequest);
-            return new ResponseEntity<>("Product created", HttpStatus.CREATED);
         } catch (EntityNotFoundException exception) {
-            return new ResponseEntity<>(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, exception.getMessage());
         }
     }
 
