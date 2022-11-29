@@ -1,6 +1,5 @@
 package org.ewebshop.user;
 
-import org.ewebshop.user.dto.UserLoginRequest;
 import org.ewebshop.user.dto.UserRegistrationRequest;
 import org.ewebshop.user.dto.UserUpdateRequest;
 import org.ewebshop.user.exception.IdNotMatchingException;
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
-import javax.security.auth.login.LoginException;
 import java.util.Objects;
 import java.util.Optional;
 

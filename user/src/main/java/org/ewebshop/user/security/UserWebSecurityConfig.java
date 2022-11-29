@@ -52,7 +52,7 @@ public class UserWebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
                 .authorizeRequests().antMatchers("api/users/{username}", "api/users/register/{username}", "api/users/exists/{username}").permitAll()
-                .antMatchers(HttpMethod.PATCH, "/api/users/update/{username}").hasAnyRole("CUSTOMER","ADMIN")
+                .antMatchers(HttpMethod.PATCH, "/api/users/{username}").hasAnyRole("CUSTOMER","ADMIN")
                 .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);

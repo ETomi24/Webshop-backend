@@ -19,7 +19,7 @@ public class OrderController {
 
     private final OrderService orderService;
 
-    @PostMapping("/create")
+    @PostMapping()
     public void createOrder(@RequestBody OrderCreateRequest orderCreateRequest) {
         try{
             orderService.orderCreate(orderCreateRequest);
@@ -47,7 +47,7 @@ public class OrderController {
 
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public void updateOrder(@PathVariable Integer id, @RequestBody OrderUpdateRequest orderUpdateRequest){
         try {
             orderService.orderUpdate(id, orderUpdateRequest);
@@ -83,7 +83,7 @@ public class OrderController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void deleteOrder(@PathVariable Integer id) {
         try {
             orderService.orderDelete(id);

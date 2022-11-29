@@ -8,7 +8,6 @@ import org.ewebshop.category.dto.CategoryUpdateRequest;
 import org.ewebshop.category.exception.DeleteException;
 import org.ewebshop.product.exception.IdNotMatchingException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -35,7 +34,7 @@ public class CategoryController {
         }
     }
 
-    @GetMapping("/all")
+    @GetMapping()
     public List<CategoryResponse> getAll() {
         try {
             List<CategoryResponse> categoryList = new ArrayList<>();
@@ -48,7 +47,7 @@ public class CategoryController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void deleteCategory(@PathVariable Integer id) {
         try{
             categoryService.deleteCategory(id);
@@ -59,7 +58,7 @@ public class CategoryController {
         }
     }
 
-    @PostMapping("/create")
+    @PostMapping()
     public void createCategory(@RequestBody CategoryCreateRequest categoryCreateRequest) {
         try {
             log.info(categoryCreateRequest.toString());
@@ -69,7 +68,7 @@ public class CategoryController {
         }
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public void updateCategory(@PathVariable Integer id, @RequestBody CategoryUpdateRequest categoryUpdateRequest) {
         try {
             categoryService.updateCategory(id, categoryUpdateRequest);

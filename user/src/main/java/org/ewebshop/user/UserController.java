@@ -24,8 +24,8 @@ public class UserController {
     @PostMapping("/register")
     public void registerUser(@RequestBody UserRegistrationRequest userRegistrationRequest) {
         try{
-            log.info("new user registration {}", userRegistrationRequest);
             userService.register(userRegistrationRequest);
+            log.info("new user registration {}", userRegistrationRequest);
         } catch (EntityExistsException exception) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
         }
@@ -41,7 +41,7 @@ public class UserController {
         }
     }
 
-    @PatchMapping("/update/{username}")
+    @PatchMapping("/{username}")
     public void updateUser(@PathVariable String username, @RequestBody UserUpdateRequest userUpdateRequest) {
         try {
             userService.updateUser(username, userUpdateRequest);

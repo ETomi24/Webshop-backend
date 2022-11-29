@@ -16,7 +16,7 @@ public class CartController {
 
     private final CartService cartService;
 
-    @GetMapping("/all/{orderId}")
+    @GetMapping("/{orderId}")
     public List<Cart> getAll(@PathVariable int orderId) {
         try {
             return cartService.getAll(orderId);

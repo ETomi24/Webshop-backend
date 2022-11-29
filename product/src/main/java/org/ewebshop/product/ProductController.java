@@ -9,7 +9,6 @@ import org.ewebshop.product.dto.ProductUpdateRequest;
 import org.ewebshop.product.exception.IdNotMatchingException;
 import org.ewebshop.product.exception.MinusQuantityException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -43,7 +42,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/all")
+    @GetMapping()
     public List<ProductResponse> getAll() {
         try {
             List<ProductResponse> productResponseList = new ArrayList<>();
@@ -64,7 +63,7 @@ public class ProductController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable Integer id) {
         try {
             productService.deleteProduct(id);
@@ -73,7 +72,7 @@ public class ProductController {
         }
     }
 
-    @PostMapping("/create")
+    @PostMapping()
     public void createProduct(@RequestBody ProductCreateRequest productCreateRequest) {
         try {
             productService.createProduct(productCreateRequest);
@@ -82,7 +81,7 @@ public class ProductController {
         }
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public void updateProduct(@PathVariable int id, @RequestBody ProductUpdateRequest productUpdateRequest) {
         try {
             productService.updateProduct(id,productUpdateRequest);
