@@ -49,3 +49,10 @@ Mostantól tárolok már képeket is a backenden hogy színesebb legyen a fronte
 A héten probáltam szépíteni a frontendet. Pár oldal kivételével minden elkészült. Backenden pedig a hiányoságokat,
 amikre szükség volt azokat potoltam. 
 
+## 10.hét
+A héten befejeztem a jwt tokennek az implementációját, ez annyit takar hogy mostantól minden szervízben használom azt authorizációhoz.
+A frontenden is már szerepekhez van kötve a hozzáférés bizonyos oldalakhoz
+## 11.hét
+Frontenden csináltam pár validációt a dolgozatnak az elso 4 fejezetét megirtam
+## 12.hét
+A dolgozat maradék részét megirtam
