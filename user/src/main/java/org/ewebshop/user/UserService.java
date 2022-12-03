@@ -38,6 +38,17 @@ public class UserService {
         }
     }
 
+    public void addAtStart(String username, String password, Role role) {
+        if (!userExists(username)) {
+            User user = User.builder()
+                    .username(username)
+                    .password(passwordEncoder.encode(password))
+                    .role(role)
+                    .build();
+            userRepository.save(user);
+        }
+    }
+
     public void updateUser(String username, UserUpdateRequest userUpdateRequest) throws IdNotMatchingException, EntityNotFoundException {
         if (!Objects.equals(username, userUpdateRequest.username())){throw new IdNotMatchingException();}
         User user = getByUsername(username);
