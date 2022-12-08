@@ -25,6 +25,9 @@ public class UserApplication {
 
     @Bean
     CommandLineRunner run(UserService userService) {
-        return args -> userService.addAtStart("Admin", "Admin", Role.ADMIN);
+        return args -> {
+            userService.addAtStart("Admin", "Admin", Role.ADMIN, "","","");
+            userService.addAtStart("Tomi", "Tomi",Role.CUSTOMER, "+36303149431", "Diósd, Etele utca 1", "tamas.ernyei@edu.com");
+        };
     }
 }

@@ -38,12 +38,15 @@ public class UserService {
         }
     }
 
-    public void addAtStart(String username, String password, Role role) {
+    public void addAtStart(String username, String password, Role role, String phoneNumber, String address, String email) {
         if (!userExists(username)) {
             User user = User.builder()
                     .username(username)
                     .password(passwordEncoder.encode(password))
                     .role(role)
+                    .phoneNumber(phoneNumber)
+                    .address(address)
+                    .email(email)
                     .build();
             userRepository.save(user);
         }
